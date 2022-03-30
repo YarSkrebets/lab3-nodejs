@@ -2,12 +2,12 @@ var mysql = require('mysql2');
 var express = require('express');
 var router = express.Router();
 
-var connection = mysql.createConnection({
-    host: "mysql",
-    port: 3306,
-    database: 'test',
-    user: "root",
-    password: "password"
+var connection = mysql.createPool({
+  connectionLimit: 10,
+  host: process.env.MYSQL_HOST || "localhost",
+  user: process.env.MYSQL_USER || "root",
+  password: process.env.MYSQL_PASSWORD || "password",
+  database: process.env.MYSQL_DATABASE || "test",
 });
 
 router.get("/favourites", function(req, res) {
